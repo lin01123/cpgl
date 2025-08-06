@@ -62,8 +62,8 @@ const colorOptionsList = document.getElementById('colorOptionsList');
 const productDescription = document.getElementById('productDescription');
 
 // 初始化
-document.addEventListener('DOMContentLoaded', () => {
-    loadProductsFromLocalStorage();
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadProductsFromServer();
     renderProductList();
     renderShopFilters();
     setupEventListeners();
@@ -127,17 +127,29 @@ function setupEventListeners() {
 
 }
 
-// 从 localStorage 加载产品数据
-function loadProductsFromLocalStorage() {
-    const storedProducts = localStorage.getItem('products');
-    if (storedProducts) {
-        products = JSON.parse(storedProducts);
+// 从服务器加载产品数据
+async function loadProductsFromServer() {
+    try {
+        const res = await fetch('/products');
+        if (res.ok) {
+            products = await res.json();
+        }
+    } catch (err) {
+        console.error('Failed to load products', err);
     }
 }
 
-// 保存产品数据到 localStorage
-function saveProductsToLocalStorage() {
-    localStorage.setItem('products', JSON.stringify(products));
+// 保存产品数据到服务器
+async function saveProductsToServer() {
+    try {
+        await fetch('/products', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(products)
+        });
+    } catch (err) {
+        console.error('Failed to save products', err);
+    }
 }
 
 // 生成唯一ID
@@ -428,8 +440,8 @@ function handleFormSubmit(e) {
         products.push(formData);
     }
     
-    // 保存到 localStorage
-    saveProductsToLocalStorage();
+    // 保存到服务器
+    saveProductsToServer();
     
     // 重新渲染产品列表
     renderProductList();
@@ -568,7 +580,7 @@ function deleteProduct() {
     const index = products.findIndex(p => p.id === currentProductForDelete);
     if (index !== -1) {
         products.splice(index, 1);
-        saveProductsToLocalStorage();
+        saveProductsToServer();
         renderProductList();
         renderShopFilters();
     }
@@ -658,7 +670,7 @@ function showImportDataDialog() {
                 const confirmImport = confirm(`确定要导入 ${importData.products.length} 个产品吗？这将覆盖现有数据。`);
                 if (confirmImport) {
                     products = importData.products;
-                    saveProductsToLocalStorage();
+                    saveProductsToServer();
                     renderProductList();
                     renderShopFilters();
                     alert('数据导入成功');
@@ -802,7 +814,7 @@ function confirmPasteImport() {
         }));
 
         products = [...products, ...productsToImport];
-        saveProductsToLocalStorage();
+        saveProductsToServer();
         renderProductList();
         renderShopFilters();
         hidePasteImportForm();
