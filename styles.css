@@ -1,0 +1,997 @@
+/* 全局样式 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f7fa;
+}
+
+.body-padding-top {
+    padding-top: 100px; /* Adjusted padding-top for a single-row header */
+}
+
+.container {
+    max-width: 0 auto;
+    margin: 0 auto;
+    padding: 0 px;
+}
+
+/* 头部样式 */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white; /* Ensure header has a background color */
+    z-index: 1000; /* Ensure header is above other content */
+    display: flex;
+    justify-content: flex-start; /* Align items to the start */
+    align-items: center;
+    padding: 15px 20px; /* Adjusted padding for a more compact header */
+    border-bottom: 1px solid #e1e4e8;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional: Add shadow for better visual separation */
+}
+
+header h1 {
+    margin-right: 20px;
+    color: #2c3e50;
+    margin-bottom: 0; /* Removed margin-bottom */
+    white-space: nowrap; /* Prevent wrapping for the title */
+}
+
+.shop-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.shop-filter-btn {
+    padding: 6px 12px;
+    background-color: #e1e4e8;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.shop-filter-btn:hover,
+.shop-filter-btn.active {
+    background-color: #4a6cf7;
+    color: #fff;
+}
+
+.search-container {
+    display: flex;
+    margin-left: 20px; /* Add margin to separate from title */
+    margin-right: 10px; /* Adjusted margin to be closer to buttons */
+    margin-bottom: 0; /* Removed margin-bottom */
+    flex-grow: 1; /* Allow search container to grow */
+    /* max-width: 300px; Removed max-width to allow it to vary */
+}
+
+#searchInput {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    width: 100%; /* Make search input take full width of its container */
+    height: 40px; /* Explicitly set height to match buttons */
+}
+.qr-hover {
+    border-color: #4a6cf7;
+    background-color: #f0f8ff;
+}
+
+#searchBtn {
+    padding: 10px 25px;
+    background-color: #4a6cf7;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 40px; /* Explicitly set height to match buttons */
+    display: inline-block;
+    white-space: nowrap; /* 防止换行 */
+}
+
+#searchBtn:hover {
+    background-color: #3a5bd9;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    white-space: nowrap; /* Prevent buttons from wrapping */
+    margin-left: auto; /* Push buttons to the right */
+}
+
+@media (max-width: 768px) {
+    .body-padding-top {
+        padding-top: 150px; /* Adjust for smaller screens if header height changes */
+    }
+
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 20px; /* Adjust padding for smaller screens */
+    }
+    
+    header h1 {
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .search-container {
+        margin-right: 0;
+        margin-left: 0; /* Remove margin on smaller screens */
+        margin-bottom: 10px;
+        width: 100%;
+        max-width: none; /* Remove max-width on smaller screens */
+    }
+    
+    #searchInput {
+        flex-grow: 1;
+    }
+    
+    .header-buttons {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        margin-left: 0; /* Remove margin on smaller screens */
+    }
+
+    .primary-btn, .secondary-btn, .danger-btn {
+        flex-grow: 1; /* Allow buttons to grow on smaller screens */
+    }
+}
+
+/* 按钮样式 */
+.primary-btn {
+    padding: 10px 20px;
+    background-color: #4a6cf7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 40px; /* Ensure consistent height */
+}
+
+.primary-btn:hover {
+    background-color: #3a5bd9;
+}
+
+.secondary-btn {
+    padding: 10px 20px;
+    background-color: #e1e4e8;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 40px; /* Ensure consistent height */
+}
+
+.secondary-btn:hover {
+    background-color: #d1d4d8;
+}
+
+.danger-btn {
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 40px; /* Ensure consistent height */
+}
+
+.danger-btn:hover {
+    background-color: #c0392b;
+}
+
+/* 产品列表样式 */
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* 1:1 比例 */
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #eee;
+}
+
+.product-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    line-height: 1.4;
+}
+
+/* TikTok风格价格显示 */
+.product-price {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 12px;
+    font-family: 'Arial', sans-serif;
+}
+
+.price-currency {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 1);
+    margin-right: 2px;
+}
+
+.price-main {
+    font-size: 36px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+    line-height: 1;
+}
+
+.price-decimal {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 1);
+}
+
+.product-meta {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.meta-item {
+    margin-right: 15px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.product-tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+
+
+/* 颜色选择器样式 */
+.color-options-display {
+    margin-bottom: 12px;
+}
+
+.color-options-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+    margin-bottom: 8px;
+}
+
+.color-options-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.color-option-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px;
+    border: 2px solid #e1e4e8;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    min-width: 60px;
+}
+
+.color-option-item.selected {
+    border-color: #4a6cf7;
+}
+
+.color-option-item:hover {
+    border-color: #3a5bd9;
+}
+
+.color-option-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    object-fit: cover;
+    background-color: #f5f7fa;
+}
+
+.color-option-name {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 1);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.close-btn:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.color-tag {
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.color-tag:hover {
+    background-color: #d0e8f8;
+}
+
+.color-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.card-actions {
+    display: flex;
+    padding: 10px 15px;
+    border-top: 1px solid #eee;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.action-btn {
+    background: none;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: #7f8c8d;
+    transition: all 0.3s;
+    font-size: 12px;
+}
+
+.action-btn:hover {
+    color: #2c3e50;
+    border-color: #bbb;
+}
+
+.action-btn.edit:hover {
+    color: #3498db;
+    border-color: #3498db;
+}
+
+.action-btn.delete:hover {
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.no-products {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+/* 表单样式 */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container, .detail-container, .confirm-container, .link-form-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.link-form-container {
+    max-width: 500px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.required {
+    color: #e74c3c;
+}
+
+input[type="text"], input[type="number"], input[type="url"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+input[type="file"] {
+    padding: 10px 0;
+}
+
+/* 价格输入容器 */
+.price-input-container {
+    display: flex;
+    gap: 0;
+}
+
+.currency-select {
+    width: 80px;
+    border-radius: 4px 0 0 4px;
+    border-right: none;
+}
+
+.price-input-container input[type="number"] {
+    border-radius: 0 4px 4px 0;
+    border-left: none;
+}
+
+/* 颜色选择器表单样式 */
+.color-options-container {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    background-color: #fafafa;
+}
+
+.color-option-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: end;
+}
+
+.color-option-input input {
+    flex: 1;
+}
+
+.add-color-btn {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.add-color-btn:hover {
+    background-color: #218838;
+}
+
+.color-options-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.color-option-form-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    border: 2px solid #e1e4e8;
+    border-radius: 4px;
+    background-color: white;
+    position: relative;
+}
+
+.color-option-form-item .remove-color {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-preview {
+    margin-top: 10px;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* 1:1 比例 */
+    position: relative;
+    background-color: #f5f7fa;
+    border: 1px dashed #ddd;
+    overflow: hidden;
+}
+
+.image-preview img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.form-actions, .detail-actions, .confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* 产品详情样式 */
+.product-detail {
+    margin-bottom: 20px;
+}
+
+.detail-image {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* 1:1 比例 */
+    position: relative;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.detail-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.detail-section {
+    margin-bottom: 15px;
+}
+
+.detail-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.detail-value {
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    min-height: 20px;
+}
+
+.detail-value.copyable {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.detail-value.copyable:hover {
+    background-color: #e9ecef;
+}
+
+/* 链接帮助样式 */
+.link-help {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+}
+
+.link-help ul {
+    margin: 5px 0 0 20px;
+}
+
+.link-help li {
+    margin-bottom: 3px;
+}
+
+/* 链接预览样式 */
+.link-preview {
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    display: none;
+}
+
+.link-preview.show {
+    display: block;
+}
+
+.preview-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.preview-content {
+    display: flex;
+    gap: 15px;
+}
+
+.preview-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    background-color: #eee;
+}
+
+.preview-info {
+    flex: 1;
+}
+
+.preview-name {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.preview-price {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.preview-meta {
+    font-size: 12px;
+    color: #666;
+}
+
+/* 链接解析状态样式 */
+.parse-status {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+.parse-status.success {
+    display: block;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.parse-status.error {
+    display: block;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.parse-status.loading {
+    display: block;
+    background-color: #e2f3f5;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* 页脚样式 */
+footer {
+    margin-top: 50px;
+    text-align: center;
+    color: #7f8c8d;
+    padding-top: 20px;
+    border-top: 1px solid #e1e4e8;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .body-padding-top {
+        padding-top: 150px; /* Adjust for smaller screens if header height changes */
+    }
+
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 20px; /* Adjust padding for smaller screens */
+    }
+    
+    header h1 {
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .search-container {
+        margin-right: 0;
+        margin-left: 0; /* Remove margin on smaller screens */
+        margin-bottom: 10px;
+        width: 100%;
+        max-width: none; /* Remove max-width on smaller screens */
+    }
+    
+    #searchInput {
+        flex-grow: 1;
+    }
+    
+    .header-buttons {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        margin-left: 0; /* Remove margin on smaller screens */
+    }
+
+    .primary-btn, .secondary-btn, .danger-btn {
+        flex-grow: 1; /* Allow buttons to grow on smaller screens */
+    }
+}
+
+
+/* 文件导入相关样式 */
+.file-upload-area {
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+.file-upload-area:hover {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+}
+
+.file-upload-area.dragover {
+    border-color: #007bff;
+    background-color: #e6f3ff;
+    transform: scale(1.02);
+}
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.upload-placeholder svg {
+    color: #666;
+}
+
+.upload-placeholder p {
+    margin: 0;
+    color: #666;
+}
+
+.file-hint {
+    font-size: 14px;
+    color: #999 !important;
+}
+
+.file-info {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 12px;
+}
+
+.file-info p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+.parse-preview {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 16px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.parse-preview h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.preview-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+.preview-item strong {
+    color: #333;
+    display: inline-block;
+    min-width: 80px;
+}
+
+.preview-colors {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.preview-color {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.preview-color img {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    object-fit: cover;
+}
+
+.parse-status {
+    margin-top: 12px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.parse-status.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.parse-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.parse-status.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+
+
+
+/* 剪贴板导入对话框样式 */
+#pasteImportOverlay {
+    /* 继承 overlay 样式 */
+}
+
+#pasteInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 14px;
+    resize: vertical;
+}
+
+#pasteStatus {
+    /* 继承 parse-status 样式 */
+}
+
+#pastePreview {
+    /* 继承 parse-preview 样式 */
+}
+
+#pastePreviewContent {
+    /* 继承 preview-content 样式 */
+}
+
+/* TikTok 网页展示 */
+.webpage-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.web-frame {
+    width: 100%;
+    height: 1080px;
+    border: none;
+}
+
+

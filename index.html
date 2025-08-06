@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品信息管理 - 优化版</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="body-padding-top">
+    <div class="container">
+        <header>
+            <h1></h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="输入ID...">
+                <button id="searchBtn">搜索</button>
+            </div>
+            <div class="header-buttons">
+                <button id="addProductBtn" class="primary-btn">显示/隐藏</button>
+                <button id="exportDataBtn" class="secondary-btn">导出数据</button>
+                <button id="importDataBtn" class="secondary-btn">导入数据</button>
+                <button id="pasteImportBtn" class="secondary-btn">从剪贴板导入</button>
+            </div>
+            <h1></h1>
+        <div id="shopFilter" class="shop-filter"></div>
+        </header>
+        <div class="webpage-container" style="display:none;">
+            <iframe id="tiktokFrame" class="web-frame" src="" title="tiktok" scrolling="yes"></iframe>
+        </div>
+
+        <main>
+            <div id="productList" class="product-list">
+                <!-- 产品列表将通过JavaScript动态生成 -->
+                <div class="no-products" id="noProducts">暂无产品信息，请添加新产品。</div>
+            </div>
+
+            <!-- 添加/编辑产品的表单 -->
+            <div id="productFormOverlay" class="overlay">
+                <div class="form-container">
+                    <h2 id="formTitle">添加新产品</h2>
+                    <form id="productForm">
+                        <input type="hidden" id="productId">
+                        
+                        <div class="form-group">
+                            <label for="productName">商品名称 <span class="required">*</span></label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="shopName">店铺名称</label>
+                            <input type="text" id="shopName">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productCode">商品ID</label>
+                            <input type="text" id="productCode">
+                        </div>
+
+                        <!-- 新增价格字段 -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productPrice">商品价格</label>
+                                <div class="price-input-container">
+                                    <select id="productCurrency" class="currency-select">
+                                        <option value="$">$</option>
+                                        <option value="¥">¥</option>
+                                        <option value="€">€</option>
+                                        <option value="£">£</option>
+                                    </select>
+                                    <input type="number" id="productPrice" placeholder="0.00" step="0.01" min="0">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productImage">商品图片URL</label>
+                            <input type="url" id="productImage" placeholder="请输入图片URL链接">
+                            <div id="imagePreview" class="image-preview"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productStyle">款式</label>
+                            <input type="text" id="productStyle">
+                        </div>
+                        
+                        <!-- 优化颜色选择器 -->
+                        <div class="form-group">
+                            <label for="productColor">颜色选项</label>
+                            <div id="colorOptionsContainer" class="color-options-container">
+                                <div class="color-option-input">
+                                    <input type="text" id="productColor" placeholder="输入颜色名称">
+                                    <input type="url" id="colorImage" placeholder="颜色图片URL（可选）">
+                                    <button type="button" id="addColorBtn" class="add-color-btn">添加颜色</button>
+                                </div>
+                                <div id="colorOptionsList" class="color-options-list"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productSku">SKU</label>
+                            <input type="text" id="productSku">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productSize">尺码</label>
+                            <input type="text" id="productSize">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productDescription">商品简介</label>
+                            <textarea id="productDescription" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productSellingPoints">商品卖点</label>
+                            <textarea id="productSellingPoints" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="interactionTopics">目标观众</label>
+                            <textarea id="interactionTopics" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productTags">商品标签</label>
+                            <input type="text" id="productTags" placeholder="多个标签请用逗号分隔">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" id="cancelBtn" class="secondary-btn">取消</button>
+                            <button type="submit" class="primary-btn">保存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 产品详情查看 -->
+            <div id="productDetailOverlay" class="overlay">
+                <div class="detail-container">
+                    <div class="detail-header">
+                        <h2>产品详情</h2>
+                        <button id="topRightCloseBtn" class="close-btn">&times;</button>
+                    </div>
+                    <div id="productDetail" class="product-detail">
+                        <!-- 产品详情将通过JavaScript动态生成 -->
+                    </div>
+                    <div class="detail-actions">
+                        <button id="closeDetailBtn" class="secondary-btn">关闭</button>
+                        <button id="editProductBtn" class="primary-btn">编辑</button>
+                        <button id="copyLinkBtn" class="secondary-btn">复制链接</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 确认删除对话框 -->
+            <div id="deleteConfirmOverlay" class="overlay">
+                <div class="confirm-container">
+                    <h2>确认删除</h2>
+                    <p>您确定要删除这个产品吗？此操作无法撤销。</p>
+                    <div class="confirm-actions">
+                        <button id="cancelDeleteBtn" class="secondary-btn">取消</button>
+                        <button id="confirmDeleteBtn" class="danger-btn">删除</button>
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- 从剪贴板导入对话框 -->
+            <div id="pasteImportOverlay" class="overlay">
+                <div class="link-form-container">
+                    <h2>从剪贴板导入</h2>
+                    <div class="form-group">
+                        <label for="pasteUrl">载入产品页面 URL</label>
+                        <input type="url" id="pasteUrl" placeholder="输入或粘贴产品页面 URL">
+                        <button type="button" id="loadPasteUrlBtn" class="secondary-btn" style="margin-top:8px;">加载 URL</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="pasteInput">产品数据 HTML (可选)</label>
+                        <textarea id="pasteInput" rows="10" placeholder="若自动解析失败，可在此粘贴 HTML..."></textarea>
+                    </div>
+                    <div id="pasteStatus" class="parse-status"></div>
+                    <div id="pastePreview" class="parse-preview" style="display: none;">
+                        <h3>解析结果预览</h3>
+                        <div id="pastePreviewContent"></div>
+                    </div>
+                    <div class="confirm-actions">
+                        <button id="cancelPasteImportBtn" class="secondary-btn">取消</button>
+                        <button id="parsePasteBtn" class="primary-btn">解析数据</button>
+                        <button id="confirmPasteImportBtn" class="primary-btn" style="display: none;">确认导入</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>产品信息管理 &copy; 2025</p>
+        </footer>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
